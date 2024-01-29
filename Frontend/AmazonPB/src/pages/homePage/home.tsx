@@ -38,13 +38,12 @@ interface Item {
     name: string;
     value: number;
     img: string | null;
-    descripton: string;
+    description: string;
     tags: string[];
 }
 
 
 export function HomePage() {
-    const tempSearch = "Pot" // Do kontekstu algo reduxa
     const { Add } = useCart();
     const navigate = useNavigate();
     const {Search} = useSearch();
@@ -94,7 +93,7 @@ export function HomePage() {
                                 {item.name}
                             </Typography>
                             <Typography variant="subtitle2" color="text.secondary" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                                {item.descripton}
+                                {item.description}
                             </Typography>
                             <Typography variant="subtitle1" sx={{ color: "green" }}>
                                 {item.value + " "}PLN
@@ -105,7 +104,7 @@ export function HomePage() {
                             <Button size="small" onClick={() => handleOpenDialog(item)}>Details</Button>
                         </CardActions>
                     </Card>
-                ))}
+                )}
 
             </Box>
             <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
@@ -121,7 +120,7 @@ export function HomePage() {
                     )}
                     <Typography>Name: {selectedItem?.name}</Typography>
                     <Typography>Value: {selectedItem?.value}</Typography>
-                    <Typography>Description: {selectedItem?.descripton}</Typography>
+                    <Typography>Description: {selectedItem?.description}</Typography>
                     <Typography>Tags: {selectedItem?.tags.join(', ')}</Typography>
                 </DialogContent>
                 <DialogActions>

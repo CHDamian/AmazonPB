@@ -4,7 +4,7 @@
         "name": "Potop",
         "value": 49,
         "img": "/images/potop.jpg",
-        "descripton": "Książka Henryka Sienkiewicza",
+        "description": "Książka Henryka Sienkiewicza",
         "tags": ["Book"]
     },
     {
@@ -12,7 +12,7 @@
         "name": "Lalka",
         "value": 55,
         "img": null,
-        "descripton": "Klasyczna powieść Bolesława Prusa",
+        "description": "Klasyczna powieść Bolesława Prusa",
         "tags": ["Book"]
     },
     {
@@ -20,7 +20,7 @@
         "name": "Puzzle Kraków",
         "value": 35,
         "img": "/images/puzzle.jpg",
-        "descripton": "Puzzle z pięknymi widokami Krakowa",
+        "description": "Puzzle z pięknymi widokami Krakowa",
         "tags": ["Game"]
     },
     {
@@ -28,7 +28,7 @@
         "name": "Zegarek Smartwatch",
         "value": 299,
         "img": "/images/smartwatch.jpg",
-        "descripton": "Nowoczesny zegarek z funkcjami smart",
+        "description": "Nowoczesny zegarek z funkcjami smart",
         "tags": ["Electronics"]
     },
     {
@@ -36,7 +36,7 @@
         "name": "Herbata Zielona",
         "value": 15,
         "img": "/images/habata.jpg",
-        "descripton": "Ekologiczna herbata zielona, bogata w antyoksydanty",
+        "description": "Ekologiczna herbata zielona, bogata w antyoksydanty",
         "tags": ["Food"]
     },
     {
@@ -44,7 +44,7 @@
         "name": "Lampa biurkowa LED",
         "value": 120,
         "img": "/images/lampka.jpg",
-        "descripton": "Energooszczędna lampa LED z regulacją jasności",
+        "description": "Energooszczędna lampa LED z regulacją jasności",
         "tags": ["Electronics"]
     }
 ]
