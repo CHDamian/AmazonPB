@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { AppBar, Box, Button, TextField, Toolbar, Typography, alpha, styled } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useSearch } from "../context/SearchContext";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -22,6 +23,7 @@ export default function RootLayout(){
     const [search, setSearch] = useState('');
     const {user, logout} = useAuth();
     const navigate = useNavigate();
+    const {Add} = useSearch();
 
     return(
         <>
@@ -39,9 +41,10 @@ export default function RootLayout(){
                     <Search>
                         <TextField
                         placeholder="Search…"
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) => Add(e.target.value)}
                         />
                     </Search>
+                    <Button onClick={() => navigate('/cart')} color="inherit">Cart</Button>
                     {
                         !user?
                         <Box>

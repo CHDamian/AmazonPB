@@ -29,7 +29,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) =>{
     const [cart, setCart] = useState<CartItem[]>([]);
 
     const Add = (item: CartItem) =>{
-        if(cart.find((e) => e.id === item.id) == null)
+        console.log(item);
+        if(!cart.find((e) => e.id === item.id))
         {
             cart.push(item);
             setCart(cart);
