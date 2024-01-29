@@ -39,6 +39,7 @@ app.post('/register', (req, res) => {
 });
 
 
+
 app.post('/updateProfile', (req, res) => {
     const { username, oldPassword, newPassword, newAddress, newEmail } = req.body;
     const users = readUsersFile();
@@ -68,9 +69,25 @@ app.post('/updateProfile', (req, res) => {
 });
 
 
-app.listen(port, ()=>{
-    console.log(`Serwer na porcie ${port}`)
-})
+
+function readItemsFile() {
+    try {
+        const itemsData = fs.readFileSync("items.json", "utf8");
+        return JSON.parse(itemsData);
+    } catch (error) {
+        console.error("Error reading items file:", error);
+        return [];
+    }
+}
+
+app.get('/items', (req, res) => {
+    const items = readItemsFile();
+    res.json(items);
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
 
 
 function readUsersFile(){
