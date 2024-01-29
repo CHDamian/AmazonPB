@@ -51,7 +51,7 @@ app.post('/updateUsername', (req, res) => {
     const userIndex = users.findIndex(u => u.username === oldUsername);
 
     if(userIndex !== -1){
-        push.users[userIndex].username = newUsername;
+        users[userIndex].username = newUsername;
         if(writeUsersFile(users)){
             res.json({ success: true, message: "Username updated" });
         } else {
