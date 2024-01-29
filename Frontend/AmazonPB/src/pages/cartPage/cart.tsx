@@ -1,46 +1,30 @@
 import { Button, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
-
-const response = [
-    {
-        "id": 1,
-        "name": "Potop",
-        "value": 49,
-        "img": 'https://ecsmedia.pl/c/potop-b-iext141296637.jpg',
-        "description": "Książka Henryka Sienkiewicza",
-        "tags": ["Book"]
-    },
-    {
-        "id": 2,
-        "name": "Potop",
-        "value": 49,
-        "img": 'https://ecsmedia.pl/c/potop-b-iext141296637.jpg',
-        "description": "Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza",
-        "tags": ["Book"]
-    },
-    {
-        "id": 3,
-        "name": "Quo vadis",
-        "value": 49,
-        "img": 'https://ecsmedia.pl/c/potop-b-iext141296637.jpg',
-        "description": "Książka Henryka Sienkiewicza",
-        "tags": ["Book"]
-    }
-]
+import { useCart } from "../../context/CartContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CartPage() {
+    const { cart, Remove } = useCart();
+    useEffect(() => {
+    }, [cart]);
+    const navigate = useNavigate();
+
     return (
         <List
             sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
             subheader={<ListSubheader>Settings</ListSubheader>}
         >
-            {response.map((item) => <ListItem>
-                <ListItemIcon>
-                <img src={item.img} style={{width: 200}}/>
-                </ListItemIcon>
-                <ListItemText id="switch-list-label-wifi" primary={item.name} secondary={`${item.value} PLN`}/>
-                <Button>Remove</Button>
+            {cart.map((item) => <ListItem>
+                <ListItemText id="switch-list-label-wifi" primary={item.name}/>
+                <ListItemText id="switch-list-label-wifi" primary={`${item.value} PLN`}/>
+                <Button onClick={() => Remove(item)}>Remove</Button>
             </ListItem>)}
+            <ListItem>
+                <ListItemText id="switch-list-label-wifi" primary={`Razem: ${cart.reduce((sum, el) => sum + el.value, 0)} PLN`}/>
+                <Button onClick={() => navigate('/buy')}>Buy</Button>
+            </ListItem>
         </List>
+
     );
 }
 

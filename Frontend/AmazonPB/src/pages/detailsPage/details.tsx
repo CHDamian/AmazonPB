@@ -14,8 +14,6 @@ const response = {
 function DetailsPage() {
     const params = useParams();
     const data = useCart();
-    console.log(params);
-    console.log(data);
     
     return (
         <>

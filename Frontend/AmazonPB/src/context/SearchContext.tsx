@@ -41,7 +41,6 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) =>{
 
 export const useSearch = (): SearchContextType => {
     const context = useContext(SearchContext);
-    console.log(context);
     if (!context) {
       throw new Error('useAuth must be used within an AuthProvider');
     }
