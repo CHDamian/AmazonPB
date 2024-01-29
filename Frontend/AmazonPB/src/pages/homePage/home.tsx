@@ -45,6 +45,7 @@ interface Item {
 
 export function HomePage() {
     const { Add } = useCart();
+    const { user } = useAuth();
     const navigate = useNavigate();
     const {Search} = useSearch();
     const [filter, setFilter] = useState('');
@@ -100,7 +101,9 @@ export function HomePage() {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button size="small" onClick={() => Add(item)}>Add to cart</Button>
+                            {user &&
+                                <Button size="small" onClick={() => Add(item)}>Add to cart</Button>
+                            }
                             <Button size="small" onClick={() => handleOpenDialog(item)}>Details</Button>
                         </CardActions>
                     </Card>

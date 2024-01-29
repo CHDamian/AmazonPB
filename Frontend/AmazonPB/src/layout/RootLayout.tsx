@@ -23,7 +23,7 @@ const names = [
     'Book',
     'Electronics',
     'Food',
-    'Games',
+    'Game',
     'Other',
 ];
 
@@ -107,7 +107,9 @@ export default function RootLayout() {
                             </Select>
                         </FormControl>
                     </Search>
-                    <Button onClick={() => navigate('/cart')} color="inherit">Cart</Button>
+                    { user &&
+                        <Button onClick={() => navigate('/cart')} color="inherit">Cart</Button>
+                    }
                     {
                         !user ?
                             <Box>

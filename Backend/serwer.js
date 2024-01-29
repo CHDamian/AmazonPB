@@ -68,7 +68,20 @@ app.post('/updateProfile', (req, res) => {
     }
 });
 
+app.post('/addItem', (req, res) => {
+    var el = req.body;
+    console.log(el);
+    const help = readItemsFile();
+    const maxim = Math.max(...help.map(o => o.value));
+    el.id = maxim + 1;
 
+    help.push(el);
+    if (writeItemsFile(help)) {
+        res.json({ success: true, message: "Dodano" })
+    } else {
+        res.status(500).json({ success: false, message: "Ni działa" })
+    }
+});
 
 function readItemsFile() {
     try {
@@ -77,6 +90,16 @@ function readItemsFile() {
     } catch (error) {
         console.error("Error reading items file:", error);
         return [];
+    }
+}
+
+function writeItemsFile(data) {
+    try{
+        fs.writeFileSync("items.json", JSON.stringify(data),"utf8");
+        return true;
+    } catch(error){
+        console.error("Ni dziala", error);
+        return false;
     }
 }
 
