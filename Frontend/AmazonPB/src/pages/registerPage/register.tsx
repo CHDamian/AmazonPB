@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Box, TextField, Button, Typography } from '@mui/material';
 
 export const RegisterPage: React.FC = () => {
     const [formData, setFormData] = useState({ 
@@ -9,13 +10,14 @@ export const RegisterPage: React.FC = () => {
         address: '', 
         email: '' 
     });
-    const [loginMessage, setLoginMessage] = useState('');
+    const [registerMessage, setRegisterMessage] = useState('');
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    
     // Use the useAuth hook to access the context
     const { login } = useAuth();
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
@@ -30,62 +32,72 @@ export const RegisterPage: React.FC = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setLoginMessage(data.message);
+                setRegisterMessage(data.message);
                 login(formData);
-                navigate('/home')
+                navigate('/home');
             } else {
-                setLoginMessage(data.message);
+                setRegisterMessage(data.message);
             }
         } catch (error) {
-            console.error('Błąd podczas wysyłania żądania:', error);
+            console.error('Error during registration request:', error);
         }
     };
 
     return (
-        <div>
-            <h2>Register Page</h2>
-            <form onSubmit={handleLogin}>
-                <label>
-                    Username:
-                    <input
-                        type="text"
-                        value={formData.username}
-                        onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                    />
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        value={formData.password}
-                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    />
-                </label>
-                <br />
-                <label>
-                    Address:
-                    <input
-                        type="text"
-                        value={formData.address}
-                        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    />
-                </label>
-                <br />
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    />
-                </label>
-                <br />
-                <button type="submit">Register</button>
-            </form>
-            <div className='dataFromContext'>
-                <p>{loginMessage}</p>
-            </div>
-        </div>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100vh',
+                bgcolor: 'background.default',
+                p: 3
+            }}
+        >
+            <Typography variant="h4" sx={{ mb: 2 }}>
+                Register
+            </Typography>
+            <Box component="form" onSubmit={handleRegister} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <TextField
+                    label="Username"
+                    variant="outlined"
+                    value={formData.username}
+                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                    fullWidth
+                />
+                <TextField
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    fullWidth
+                />
+                <TextField
+                    label="Address"
+                    variant="outlined"
+                    value={formData.address}
+                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    fullWidth
+                />
+                <TextField
+                    label="Email"
+                    type="email"
+                    variant="outlined"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    fullWidth
+                />
+                <Button type="submit" variant="contained" color="primary">
+                    Register
+                </Button>
+            </Box>
+            {registerMessage && (
+                <Typography color="error" sx={{ mt: 2 }}>
+                    {registerMessage}
+                </Typography>
+            )}
+        </Box>
     );
 };

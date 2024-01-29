@@ -10,8 +10,8 @@ const router = createBrowserRouter(
       <Route element={<RootLayout/>}>
         <Route index element={<Navigate to="/home"/>} />
         <Route path='/home' element={<HomePage/>}></Route>
-      </Route>
       <Route path='/profile' element={<ProfilePage/>} />
+      </Route>
       <Route path='/register' element={<RegisterPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
     </Route>

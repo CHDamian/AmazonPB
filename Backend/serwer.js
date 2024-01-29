@@ -44,20 +44,26 @@ app.post('/updateProfile', (req, res) => {
     const users = readUsersFile();
     const userIndex = users.findIndex(u => u.username === username);
 
-    if(userIndex !== -1 && users[userIndex].password === oldPassword){
-        users[userIndex] = {
-            ...users[userIndex],
-            password: newPassword || users[userIndex].password,
-            address: newAddress || users[userIndex].address,
-            email: newEmail || users[userIndex].email
-        };
-        if(writeUsersFile(users)){
-            res.json({ success: true, message: "Profile updated" });
-        } else {
-            res.status(500).json({ success: false, message: "Error updating profile" });
+    if (userIndex === -1) {
+        return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    const user = users[userIndex];
+
+    if (oldPassword && newPassword) {
+        if (user.password !== oldPassword) {
+            return res.status(400).json({ success: false, message: "Invalid old password" });
         }
+        user.password = newPassword;
+    }
+
+    if (newAddress) user.address = newAddress;
+    if (newEmail) user.email = newEmail;
+
+    if (writeUsersFile(users)) {
+        res.json({ success: true, message: "Profile updated" });
     } else {
-        res.status(400).json({ success: false, message: "Invalid old password or user not found" });
+        res.status(500).json({ success: false, message: "Error updating profile" });
     }
 });
 

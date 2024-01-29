@@ -36,7 +36,14 @@ export function HomePage() {
     const tempSearch = "Pot" // Do kontekstu algo reduxa
     return (
         <div>
-            Witamy!
+            <Box sx={{ my: 4, textAlign: 'center' }}>
+                <Typography variant="h4" component="h1" gutterBottom>
+                    Discover Amazing Products!
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary">
+                    Explore our wide range of quality items and find what you love.
+                </Typography>
+            </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                 {items.filter(item => item.name.toLowerCase().includes(tempSearch.toLowerCase()))
                 .map(item => <Card sx={{ width: 300, m: 2}}>
