@@ -29,7 +29,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) =>{
     const [cart, setCart] = useState<CartItem[]>([]);
 
     const Add = (item: CartItem) =>{
-        console.log(item);
         if(!cart.find((e) => e.id === item.id))
         {
             cart.push(item);
@@ -62,7 +61,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) =>{
 
 export const useCart = (): CartContextType => {
     const context = useContext(CartContext);
-    console.log(context);
     if (!context) {
       throw new Error('useAuth must be used within an AuthProvider');
     }
