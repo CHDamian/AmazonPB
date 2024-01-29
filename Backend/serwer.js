@@ -45,6 +45,23 @@ app.post('/register', (req, res) =>{
 })
 
 
+app.post('/updateUsername', (req, res) => {
+    const { oldUsername, newUsername } = req.body;
+    const users = readUsersFile();
+    const userIndex = users.findIndex(u => u.username === oldUsername);
+
+    if(userIndex !== -1){
+        push.users[userIndex].username = newUsername;
+        if(writeUsersFile(users)){
+            res.json({ success: true, message: "Username updated" });
+        } else {
+            res.status(500).json({ success: false, message: "Error updating username" });
+        }
+    } else {
+        res.status(404).json({ success: false, message: "User not found" });
+    }
+});
+
 app.listen(port, ()=>{
     console.log(`Serwer na porcie ${port}`)
 })

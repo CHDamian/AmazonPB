@@ -53,7 +53,7 @@ export default function RootLayout(){
                             </Button>
                         </Box>:
                         <Box>
-                            <Button color="inherit">{user.username}</Button>
+                            <Button onClick={() => navigate('/profile')} color="inherit">{user.username}</Button>
                             <Button onClick={() => logout()} color="inherit">Logout</Button>
                         </Box>
                     }
