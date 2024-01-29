@@ -70,7 +70,6 @@ app.post('/updateProfile', (req, res) => {
 
 app.post('/addItem', (req, res) => {
     var el = req.body;
-    console.log(el);
     const help = readItemsFile();
     const maxim = Math.max(...help.map(o => o.value));
     el.id = maxim + 1;
@@ -78,6 +77,18 @@ app.post('/addItem', (req, res) => {
     help.push(el);
     if (writeItemsFile(help)) {
         res.json({ success: true, message: "Dodano" })
+    } else {
+        res.status(500).json({ success: false, message: "Ni działa" })
+    }
+});
+
+app.post('/buy', (req, res) => {
+    var el = req.body;
+    const help = readItemsFile();
+    const arr = help.filter(x => el.find((elm) => elm.id === x.id) === undefined);
+
+    if (writeItemsFile(arr)) {
+        res.json({ success: true, message: "Zakupiono!" })
     } else {
         res.status(500).json({ success: false, message: "Ni działa" })
     }
