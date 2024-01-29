@@ -3,8 +3,48 @@
         "id": 1,
         "name": "Potop",
         "value": 49,
-        "img": null,
+        "img": "/images/potop.jpg",
         "descripton": "Książka Henryka Sienkiewicza",
         "tags": ["Book"]
+    },
+    {
+        "id": 2,
+        "name": "Lalka",
+        "value": 55,
+        "img": null,
+        "descripton": "Klasyczna powieść Bolesława Prusa",
+        "tags": ["Book"]
+    },
+    {
+        "id": 3,
+        "name": "Puzzle Kraków",
+        "value": 35,
+        "img": "/images/puzzle.jpg",
+        "descripton": "Puzzle z pięknymi widokami Krakowa",
+        "tags": ["Game"]
+    },
+    {
+        "id": 4,
+        "name": "Zegarek Smartwatch",
+        "value": 299,
+        "img": "/images/smartwatch.jpg",
+        "descripton": "Nowoczesny zegarek z funkcjami smart",
+        "tags": ["Electronics"]
+    },
+    {
+        "id": 5,
+        "name": "Herbata Zielona",
+        "value": 15,
+        "img": "/images/habata.jpg",
+        "descripton": "Ekologiczna herbata zielona, bogata w antyoksydanty",
+        "tags": ["Food"]
+    },
+    {
+        "id": 6,
+        "name": "Lampa biurkowa LED",
+        "value": 120,
+        "img": "/images/lampka.jpg",
+        "descripton": "Energooszczędna lampa LED z regulacją jasności",
+        "tags": ["Electronics"]
     }
 ]

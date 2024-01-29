@@ -32,11 +32,11 @@ export default function RootLayout(){
                     <Toolbar sx={{display:'flex', justifyContent:'space-between'}}>
                     <Button
                         color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
+                        aria-label="logo"
+                        sx={{ mr: 2, p: 0 }}
                         onClick={() => navigate('/home')}
                     >
-                        AmazonPB
+                         <img src="/images/OIG.png" alt="Logo" style={{ height: '90px' }} />
                     </Button>
                     <Search>
                         <TextField
@@ -56,7 +56,7 @@ export default function RootLayout(){
                             </Button>
                         </Box>:
                         <Box>
-                            <Button color="inherit">{user.username}</Button>
+                            <Button onClick={() => navigate('/profile')} color="inherit">{user.username}</Button>
                             <Button onClick={() => logout()} color="inherit">Logout</Button>
                         </Box>
                     }

@@ -1,6 +1,6 @@
 import './App.css'
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider, Navigate } from "react-router-dom";
-import { HomePage, LoginPage, RegisterPage } from './pages';
+import { HomePage, LoginPage, RegisterPage, ProfilePage } from './pages';
 import RootLayout from './layout/RootLayout';
 import { AuthProvider } from './context/AuthContext';
 import DetailsPage from './pages/detailsPage/details';
@@ -17,6 +17,7 @@ const router = createBrowserRouter(
         <Route path='/home' element={<HomePage/>}></Route>
         <Route path='/details/:id' element={<DetailsPage/>}></Route>
         <Route path='/cart' element={<CartPage/>}></Route>
+        <Route path='/profile' element={<ProfilePage/>} />
       </Route>
       <Route path='/register' element={<RegisterPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
