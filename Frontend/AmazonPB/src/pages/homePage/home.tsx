@@ -1,7 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, IconButton, Dialog, DialogTitle, DialogContent, DialogActions , TextField, Toolbar, Typography, alpha, styled } from "@mui/material"
+import { SearchBox } from "../../components"
+import { useContext, useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
+import { useSearch } from "../../context/SearchContext";
 
+const items = [
+    {
+        "id": 1,
+        "name": "Potop",
+        "value": 49,
+        "img": 'https://ecsmedia.pl/c/potop-b-iext141296637.jpg',
+        "description": "Książka Henryka Sienkiewicza",
+        "tags": ["Book"]
+    },
+    {
+        "id": 2,
+        "name": "Potop",
+        "value": 49,
+        "img": 'https://ecsmedia.pl/c/potop-b-iext141296637.jpg',
+        "description": "Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza",
+        "tags": ["Book"]
+    },
+    {
+        "id": 3,
+        "name": "Quo vadis",
+        "value": 49,
+        "img": 'https://ecsmedia.pl/c/potop-b-iext141296637.jpg',
+        "description": "Książka Henryka Sienkiewicza",
+        "tags": ["Book"]
+    }
+]
+        
 interface Item {
     id: number;
     name: string;
@@ -11,7 +42,15 @@ interface Item {
     tags: string[];
 }
 
+
 export function HomePage() {
+    const tempSearch = "Pot" // Do kontekstu algo reduxa
+    const { Add } = useCart();
+    const navigate = useNavigate();
+    const {Search} = useSearch();
+    const [filter, setFilter] = useState('');
+    useEffect(() => {setFilter(Search);
+    }, [Search]);
     const [items, setItems] = useState<Item[]>([]);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -31,6 +70,7 @@ export function HomePage() {
     const handleCloseDialog = () => {
         setIsDialogOpen(false);
     };
+
     return (
         <div>
             <Box sx={{ my: 4, textAlign: 'center' }}>
@@ -42,8 +82,8 @@ export function HomePage() {
                 </Typography>
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                {items.map(item => (
-                    <Card key={item.id} sx={{ width: 300, m: 2 }}>
+                {items.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
+                .map(item => <Card sx={{ width: 300, m: 2}}>
                         <CardMedia
                             sx={{ height: 180 }}
                             image={item.img || '/images/default.png'}
@@ -61,11 +101,12 @@ export function HomePage() {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button size="small">Add to cart</Button>
+                            <Button size="small" onClick={() => Add(item)}>Add to cart</Button>
                             <Button size="small" onClick={() => handleOpenDialog(item)}>Details</Button>
                         </CardActions>
                     </Card>
                 ))}
+
             </Box>
             <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
                 <DialogTitle>Item Details</DialogTitle>
