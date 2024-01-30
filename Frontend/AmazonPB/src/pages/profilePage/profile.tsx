@@ -207,9 +207,11 @@ export const ProfilePage: React.FC = () => {
                 )}
             </Box>
             <React.Fragment>
-                <Button variant="outlined" onClick={handleClickOpen}>
-                    Add new item
-                </Button>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Button variant="outlined" onClick={handleClickOpen}>
+                     Add new item
+                    </Button>
+                </div>
                 <Dialog
                     open={open}
                     onClose={handleClose}
@@ -245,11 +247,13 @@ export const ProfilePage: React.FC = () => {
                             onChange={(e) => setDescriptionForm(e.target.value)}
                         />
 
-                        <Typography>
-                            Add img:
-                        </Typography>
-                        <Button onClick={() => openFilePicker()}>Add</Button>
-
+                        <div style={{ display: 'flex', alignItems: 'center', margin: 'dense' }}>
+                                <Typography style={{ marginRight: '8px' }}>
+                                 Add img:
+                                </Typography>
+                            <Button onClick={() => openFilePicker()}>Add</Button>
+                        </div>
+                        
                         <FormControlLabel control={<Checkbox onChange={() => handleTags('Book')}/>} label="Book" id='isBook' />
                         <FormControlLabel control={<Checkbox onChange={() => handleTags('Electronics')}/>} label="Electronics" id='isElectronics' />
                         <FormControlLabel control={<Checkbox onChange={() => handleTags('Food')}/>} label="Food" id='isFood' />

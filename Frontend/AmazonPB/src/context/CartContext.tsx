@@ -36,13 +36,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) =>{
         }
     };
 
-    const Remove = (item: CartItem) =>{
-        const it = cart.findIndex((e) => e.id === item.id);
-        if(it != -1)
-        {
-            cart.splice(it, 1);
-            setCart(cart);
-        }
+    const Remove = (item: CartItem) => {
+        const updatedCart = cart.filter((e) => e.id !== item.id);
+        setCart(updatedCart);
     };
 
     const Clear = () =>{
