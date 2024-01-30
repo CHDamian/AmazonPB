@@ -1,38 +1,10 @@
-import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, IconButton, Dialog, DialogTitle, DialogContent, DialogActions , TextField, Toolbar, Typography, alpha, styled } from "@mui/material"
-import { SearchBox } from "../../components"
+import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Toolbar, Typography, alpha, styled, Alert, AlertTitle } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useSearch } from "../../context/SearchContext";
 
-const items = [
-    {
-        "id": 1,
-        "name": "Potop",
-        "value": 49,
-        "img": 'https://ecsmedia.pl/c/potop-b-iext141296637.jpg',
-        "description": "Książka Henryka Sienkiewicza",
-        "tags": ["Book"]
-    },
-    {
-        "id": 2,
-        "name": "Potop",
-        "value": 49,
-        "img": 'https://ecsmedia.pl/c/potop-b-iext141296637.jpg',
-        "description": "Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza Książka Henryka Sienkiewicza",
-        "tags": ["Book"]
-    },
-    {
-        "id": 3,
-        "name": "Quo vadis",
-        "value": 49,
-        "img": 'https://ecsmedia.pl/c/potop-b-iext141296637.jpg',
-        "description": "Książka Henryka Sienkiewicza",
-        "tags": ["Book"]
-    }
-]
-        
 interface Item {
     id: number;
     name: string;
@@ -47,10 +19,19 @@ export function HomePage() {
     const { Add } = useCart();
     const { user } = useAuth();
     const navigate = useNavigate();
-    const {Search, Fillters} = useSearch();
+    const { Search, Fillters } = useSearch();
     const [filter, setFilter] = useState('');
-    useEffect(() => {setFilter(Search);
+    useEffect(() => {
+        setFilter(Search);
     }, [Search]);
+    useEffect(() => {
+        const isBought = localStorage.getItem('bought') === 'true';
+    
+        if (isBought) {
+          handleAlert('Purchase complete!');
+          localStorage.removeItem('bought');
+        }
+      }, []);
     const [items, setItems] = useState<Item[]>([]);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -61,7 +42,7 @@ export function HomePage() {
             .then(data => setItems(data))
             .catch(error => console.error('Error fetching items:', error));
     }, []);
-    
+
     const handleOpenDialog = (item: Item) => {
         setSelectedItem(item);
         setIsDialogOpen(true);
@@ -71,8 +52,40 @@ export function HomePage() {
         setIsDialogOpen(false);
     };
 
+    const [showAlert, setShowAlert] = useState(false);
+    const [messAlert, setMessAlert] = useState('');
+    const handleAlert = (mess: string) => {
+        setMessAlert(mess);
+        setShowAlert(true);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 6000);
+    }
+
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
+
     return (
         <div>
+            {showAlert && (
+                <Alert 
+                severity="success" 
+                onClose={handleCloseAlert}
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '50%',
+                    textAlign: 'center',
+                    zIndex: 1000,
+                  }}
+                >
+                    <AlertTitle>Sukces</AlertTitle>
+                    {messAlert}
+                </Alert>
+            )}
             <Box sx={{ my: 4, textAlign: 'center' }}>
                 <Typography variant="h4" component="h1" gutterBottom>
                     Discover Amazing Products!
@@ -83,8 +96,8 @@ export function HomePage() {
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                 {items.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
-                .filter(item => Fillters.every(tag => item.tags.includes(tag)))
-                .map(item => <Card sx={{ width: 300, m: 2}}>
+                    .filter(item => Fillters.every(tag => item.tags.includes(tag)))
+                    .map(item => <Card sx={{ width: 300, m: 2 }}>
                         <CardMedia
                             sx={{ height: 180 }}
                             image={item.img || '/images/default.png'}
@@ -103,18 +116,18 @@ export function HomePage() {
                         </CardContent>
                         <CardActions>
                             {user &&
-                                <Button size="small" onClick={() => Add(item)}>Add to cart</Button>
+                                <Button size="small" onClick={() => { Add(item); handleAlert(`${item.name} added to cart!`) }}>Add to cart</Button>
                             }
                             <Button size="small" onClick={() => handleOpenDialog(item)}>Details</Button>
                         </CardActions>
                     </Card>
-                )}
+                    )}
 
             </Box>
             <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
                 <DialogTitle>Item Details</DialogTitle>
                 <DialogContent>
-                     {selectedItem?.img && (
+                    {selectedItem?.img && (
                         <CardMedia
                             component="img"
                             image={selectedItem.img}
