@@ -21,28 +21,38 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+const CartInit = () => {
+    const el = localStorage.getItem('cart');
+    if(el)return JSON.parse(el);
+    return [];
+}
+
 type CartProviderProps = {
     children: ReactNode;
   };
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) =>{
-    const [cart, setCart] = useState<CartItem[]>([]);
+    const [cart, setCart] = useState<CartItem[]>(CartInit());
 
     const Add = (item: CartItem) =>{
-        if(!cart.find((e) => e.id === item.id))
+        let updatedCart = cart;
+        if(!updatedCart.find((e) => e.id === item.id))
         {
-            cart.push(item);
-            setCart(cart);
+            updatedCart.push(item);
+            setCart(updatedCart);
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
         }
     };
 
     const Remove = (item: CartItem) => {
         const updatedCart = cart.filter((e) => e.id !== item.id);
         setCart(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
     };
 
     const Clear = () =>{
         setCart([]);
+        localStorage.removeItem('cart');
     }
 
     const contextValue: CartContextType = {

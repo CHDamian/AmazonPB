@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useFilePicker } from 'use-file-picker';
-import { Box, TextField, Button, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, TextField, Button, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Checkbox, FormControlLabel, Alert, AlertTitle } from '@mui/material';
 
 
 interface ItemToAdd {
@@ -88,44 +88,75 @@ export const ProfilePage: React.FC = () => {
 
     const handleSubmit = async () => {
 
-        try{
+        try {
 
-        const response = await fetch('http://localhost:3000/addItem', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: nameForm,
-                value: valueForm,
-                description: descriptionForm,
-                img: null,
-                tags: tagForm
-            }),
-        });
-        console.log(response);
-        setNameForm('');
-        setValueForm(0);
-        setDescriptionForm('')
-        setTagForm([]);
-        clear();
-        setOpen(false);
+            const response = await fetch('http://localhost:3000/addItem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: nameForm,
+                    value: valueForm,
+                    description: descriptionForm,
+                    img: null,
+                    tags: tagForm
+                }),
+            });
+            console.log(response);
+            setNameForm('');
+            setValueForm(0);
+            setDescriptionForm('')
+            setTagForm([]);
+            clear();
+            setOpen(false);
+            handleAlert('Succesfully added new item');
         }
-        catch(e)
-        {
+        catch (e) {
             console.log('NIe działa!');
         }
     }
 
-    const handleTags = (el: string) =>
-    {
+    const handleTags = (el: string) => {
         let array = tagForm;
-        array.includes(el)? array = array.filter(elm => elm !== el) : array.push(el);
+        array.includes(el) ? array = array.filter(elm => elm !== el) : array.push(el);
         setTagForm(array);
     }
 
+    const [showAlert, setShowAlert] = useState(false);
+    const [messAlert, setMessAlert] = useState('');
+    const handleAlert = (mess: string) => {
+        setMessAlert(mess);
+        setShowAlert(true);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 6000);
+    }
+
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
+
     return (
         <>
+            {showAlert && (
+                <Alert
+                    severity="success"
+                    onClose={handleCloseAlert}
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        width: '50%',
+                        textAlign: 'center',
+                        zIndex: 1000,
+                    }}
+                >
+                    <AlertTitle>Sukces</AlertTitle>
+                    {messAlert}
+                </Alert>
+            )}
             <Box sx={{ p: 3, maxWidth: 500, mx: 'auto' }}>
                 <Typography variant="h4" sx={{ mb: 3 }}>
                     Your Profile
@@ -209,7 +240,7 @@ export const ProfilePage: React.FC = () => {
             <React.Fragment>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Button variant="outlined" onClick={handleClickOpen}>
-                     Add new item
+                        Add new item
                     </Button>
                 </div>
                 <Dialog
@@ -248,17 +279,17 @@ export const ProfilePage: React.FC = () => {
                         />
 
                         <div style={{ display: 'flex', alignItems: 'center', margin: 'dense' }}>
-                                <Typography style={{ marginRight: '8px' }}>
-                                 Add img:
-                                </Typography>
+                            <Typography style={{ marginRight: '8px' }}>
+                                Add img:
+                            </Typography>
                             <Button onClick={() => openFilePicker()}>Add</Button>
                         </div>
-                        
-                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Book')}/>} label="Book" id='isBook' />
-                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Electronics')}/>} label="Electronics" id='isElectronics' />
-                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Food')}/>} label="Food" id='isFood' />
-                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Game')}/>} label="Game" id='isGame' />
-                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Other')}/>} label="Other" id='isOther' />
+
+                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Book')} />} label="Book" id='isBook' />
+                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Electronics')} />} label="Electronics" id='isElectronics' />
+                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Food')} />} label="Food" id='isFood' />
+                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Game')} />} label="Game" id='isGame' />
+                        <FormControlLabel control={<Checkbox onChange={() => handleTags('Other')} />} label="Other" id='isOther' />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>

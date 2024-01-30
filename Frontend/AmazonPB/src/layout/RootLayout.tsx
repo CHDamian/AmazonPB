@@ -3,6 +3,7 @@ import { AppBar, Box, Button, FormControl, InputLabel, MenuItem, OutlinedInput, 
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useSearch } from "../context/SearchContext";
+import { useCart } from "../context/CartContext";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -52,6 +53,7 @@ export default function RootLayout() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const { Add, AddFillter } = useSearch();
+    const {Clear} = useCart();
 
     const theme = useTheme();
     const [personName, setPersonName] = React.useState<string[]>([]);
@@ -123,7 +125,7 @@ export default function RootLayout() {
                             </Box> :
                             <Box>
                                 <Button onClick={() => navigate('/profile')} color="inherit">{user.username}</Button>
-                                <Button onClick={() => logout()} color="inherit">Logout</Button>
+                                <Button onClick={() => {logout(); Clear(); navigate('/home'); }} color="inherit">Logout</Button>
                             </Box>
                     }
                 </Toolbar>

@@ -31,6 +31,7 @@ function BuyPage() {
     
             if (response.ok) {
                 Clear();
+                localStorage.setItem('bought', 'true');
                 navigate('/home');
             } else {
                 setErrMessage(data.message);
@@ -54,7 +55,7 @@ function BuyPage() {
             }}
         >
             <Typography variant="h4" sx={{ mb: 2 }}>
-                Login
+                Kup
             </Typography>
             <Box component="form" onSubmit={handleBuy} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <TextField

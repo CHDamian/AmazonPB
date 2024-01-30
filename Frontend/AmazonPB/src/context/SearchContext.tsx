@@ -1,16 +1,6 @@
-import { create } from "@mui/material/styles/createTransitions";
 import { ReactNode, createContext, useContext, useState } from "react";
 
 
-
-type SearchItem = {
-    id: number;
-    name: string;
-    value: number;
-    img: string;
-    description: string;
-    tags: string[];
-}
 
 type SearchContextType = {
     Search: string;
