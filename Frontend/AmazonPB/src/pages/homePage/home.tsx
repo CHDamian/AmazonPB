@@ -47,7 +47,7 @@ export function HomePage() {
     const { Add } = useCart();
     const { user } = useAuth();
     const navigate = useNavigate();
-    const {Search} = useSearch();
+    const {Search, Fillters} = useSearch();
     const [filter, setFilter] = useState('');
     useEffect(() => {setFilter(Search);
     }, [Search]);
@@ -83,6 +83,7 @@ export function HomePage() {
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                 {items.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
+                .filter(item => Fillters.every(tag => item.tags.includes(tag)))
                 .map(item => <Card sx={{ width: 300, m: 2}}>
                         <CardMedia
                             sx={{ height: 180 }}
