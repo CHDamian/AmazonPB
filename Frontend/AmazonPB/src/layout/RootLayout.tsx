@@ -51,7 +51,7 @@ export default function RootLayout() {
     const [search, setSearch] = useState('');
     const { user, logout } = useAuth();
     const navigate = useNavigate();
-    const { Add } = useSearch();
+    const { Add, AddFillter } = useSearch();
 
     const theme = useTheme();
     const [personName, setPersonName] = React.useState<string[]>([]);
@@ -64,6 +64,7 @@ export default function RootLayout() {
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
+        AddFillter(typeof value === 'string' ? value.split(',') : value);
     };
 
     return (
